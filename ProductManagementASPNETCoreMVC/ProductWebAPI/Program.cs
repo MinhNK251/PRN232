@@ -1,3 +1,6 @@
+using Repositories;
+using Services;
+using System.Text.Json.Serialization;
 
 namespace ProductWebAPI
 {
@@ -9,9 +12,16 @@ namespace ProductWebAPI
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.Never;
+            });
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+            builder.Services.AddSingleton<IProductService, ProductService>();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
