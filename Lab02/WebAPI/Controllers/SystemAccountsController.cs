@@ -26,6 +26,13 @@ namespace WebAPI.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult> Login([FromBody] AccountRequestDTO loginDTO)
         {
+            // Post Login Request Body
+
+            //{
+            //    "email": "admin@CosmeticsDB.info",
+            //    "password": "@1"
+            //}
+
             try
             {
                 var account = await _systemAccountService.Login(loginDTO.Email, loginDTO.Password);

@@ -11,10 +11,10 @@ namespace WebAPI.Controllers
     [ApiController]
     public class CosmeticInformationsController : ControllerBase
     {
-        private readonly ICosmeticInformationService _cismeticInformationService;
-        public CosmeticInformationsController(ICosmeticInformationService cismeticInformationService)
+        private readonly ICosmeticInformationService _cosmeticInformationService;
+        public CosmeticInformationsController(ICosmeticInformationService cosmeticInformationService)
         {
-            _cismeticInformationService = cismeticInformationService;
+            _cosmeticInformationService = cosmeticInformationService;
         }
 
         [EnableQuery]
@@ -24,7 +24,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var result = await _cismeticInformationService.GetAllCosmetics();
+                var result = await _cosmeticInformationService.GetAllCosmetics();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var result = await _cismeticInformationService.GetAllCategories();
+                var result = await _cosmeticInformationService.GetAllCategories();
                 return Ok(result);
             }
             catch (Exception ex)
@@ -52,9 +52,21 @@ namespace WebAPI.Controllers
         [HttpPost("/api/CosmeticInformations")]
         public async Task<ActionResult<CosmeticInformation>> AddCosmeticInformation([FromBody] CosmeticInformation cosmeticInformation)
         {
+            // Sample Post Request Body
+
+            //{
+            //      "cosmeticId": "new cosmetic test",
+            //      "cosmeticName": "new cosmetic test",
+            //      "skinType": "string",
+            //      "expirationDate": "string",
+            //      "cosmeticSize": "string",
+            //      "dollarPrice": 100,
+            //      "categoryId": "CAT0101011"
+            //}
+
             try
             {
-                var result = await _cismeticInformationService.Add(cosmeticInformation);
+                var result = await _cosmeticInformationService.Add(cosmeticInformation);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -67,10 +79,22 @@ namespace WebAPI.Controllers
         [HttpPut("/api/CosmeticInformations/{id}")]
         public async Task<ActionResult<CosmeticInformation>> UpdateCosmeticInformation(string id, [FromBody] CosmeticInformation cosmeticInformation)
         {
+            // Sample Put Request Body
+
+            //{
+            //      "cosmeticId": "string",
+            //      "cosmeticName": "new update",
+            //      "skinType": "string",
+            //      "expirationDate": "string",
+            //      "cosmeticSize": "string",
+            //      "dollarPrice": 250,
+            //      "categoryId": "CAT0101015"
+            //}
+
             try
             {
                 cosmeticInformation.CosmeticId = id;
-                var result = await _cismeticInformationService.Update(cosmeticInformation);
+                var result = await _cosmeticInformationService.Update(cosmeticInformation);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -85,7 +109,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var result = await _cismeticInformationService.Delete(id);
+                var result = await _cosmeticInformationService.Delete(id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -101,7 +125,7 @@ namespace WebAPI.Controllers
         {
             try
             {
-                var result = await _cismeticInformationService.GetOne(id);
+                var result = await _cosmeticInformationService.GetOne(id);
                 return Ok(result);
             }
             catch (Exception ex)
