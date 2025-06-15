@@ -3,13 +3,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Services;
 
 namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CosmeticInformationsController : ControllerBase
+    public class CosmeticInformationsController : ODataController
     {
         private readonly ICosmeticInformationService _cosmeticInformationService;
         public CosmeticInformationsController(ICosmeticInformationService cosmeticInformationService)
