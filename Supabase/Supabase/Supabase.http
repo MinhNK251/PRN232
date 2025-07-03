@@ -1,0 +1,6 @@
+@Supabase_HostAddress = http://localhost:5213
+
+GET {{Supabase_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
