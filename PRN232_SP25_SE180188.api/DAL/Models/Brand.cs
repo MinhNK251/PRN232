@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DAL.Models;
 
@@ -15,5 +16,6 @@ public partial class Brand
 
     public string? Website { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<Handbag> Handbags { get; set; } = new List<Handbag>();
 }
