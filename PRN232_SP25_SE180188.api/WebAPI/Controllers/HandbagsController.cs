@@ -3,12 +3,14 @@ using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace WebAPI.Controllers
 {
     [Route("api/handbags")]
     [ApiController]
-    public class HandbagsController : ControllerBase
+    public class HandbagsController : ODataController
     {
         private readonly IHandbagService _service;
 
@@ -17,6 +19,7 @@ namespace WebAPI.Controllers
             _service = service;
         }
 
+        [EnableQuery]
         [HttpGet]
         [Authorize(Roles = "administrator,moderator,developer,member")]
         public async Task<IActionResult> GetAll()
@@ -40,6 +43,8 @@ namespace WebAPI.Controllers
         [Authorize(Roles = "administrator,moderator")]
         public async Task<IActionResult> Create([FromBody] Handbag handbag)
         {
+            var newId = await _service.GetAllAsync().ContinueWith(t => t.Result.Max(h => h.HandbagId) + 1);
+            handbag.HandbagId = newId;
             var (isSuccess, errorCode, errorMsg) = await _service.AddAsync(handbag);
             if (!isSuccess)
                 return BadRequest(new { errorCode, message = errorMsg });
@@ -74,11 +79,21 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
+        [EnableQuery]
+        [HttpGet("search/odata")]
+        [Authorize(Roles = "administrator,moderator,developer,member")]
+        public IActionResult Search([FromQuery] string? modelName, [FromQuery] string? material)
+        {
+            var results = _service.Search(modelName, material);
+            return Ok(results);
+        }
+
+        [EnableQuery]
         [HttpGet("search")]
         [Authorize(Roles = "administrator,moderator,developer,member")]
-        public async Task<IActionResult> Search([FromQuery] string modelName, [FromQuery] string material)
+        public IActionResult SearchGrouped([FromQuery] string? modelName, [FromQuery] string? material)
         {
-            var results = await _service.SearchAsync(modelName, material);
+            var results = _service.Search(modelName, material);
             var grouped = results
                 .GroupBy(h => h.Brand.BrandName)
                 .Select(g => new

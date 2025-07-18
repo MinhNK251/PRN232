@@ -23,14 +23,20 @@ namespace DAL.Repositories
 
         public async Task<Handbag> GetByIdAsync(int id)
         {
-            return await _context.Handbags.Include(h => h.Brand).FirstOrDefaultAsync(h => h.HandbagId == id);
+            return await _context.Handbags.Include(h => h.Brand).AsNoTracking().FirstOrDefaultAsync(h => h.HandbagId == id);
         }
 
-        public async Task<List<Handbag>> SearchAsync(string modelName, string material)
+        public IQueryable<Handbag> Search(string? modelName, string? material)
         {
-            return await _context.Handbags.Include(h => h.Brand)
-                .Where(h => h.ModelName.Contains(modelName) && h.Material.Contains(material))
-                .ToListAsync();
+            var query = _context.Handbags.Include(h => h.Brand).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(modelName))
+                query = query.Where(h => h.ModelName.Contains(modelName));
+
+            if (!string.IsNullOrWhiteSpace(material))
+                query = query.Where(h => h.Material.Contains(material));
+
+            return query;
         }
 
         public async Task AddAsync(Handbag handbag)

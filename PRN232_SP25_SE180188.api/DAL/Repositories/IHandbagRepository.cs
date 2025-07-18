@@ -11,7 +11,7 @@ namespace DAL.Repositories
     {
         Task<List<Handbag>> GetAllAsync();
         Task<Handbag> GetByIdAsync(int id);
-        Task<List<Handbag>> SearchAsync(string modelName, string material);
+        IQueryable<Handbag> Search(string? modelName, string? material);
         Task AddAsync(Handbag handbag);
         Task UpdateAsync(Handbag handbag);
         Task DeleteAsync(int id);

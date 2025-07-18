@@ -22,12 +22,12 @@ namespace BLL.Services
 
         public async Task<Handbag> GetByIdAsync(int id) => await _handbagRepository.GetByIdAsync(id);
 
-        public async Task<List<Handbag>> SearchAsync(string modelName, string material) => await _handbagRepository.SearchAsync(modelName, material);
+        public IQueryable<Handbag> Search(string? modelName, string? material) => _handbagRepository.Search(modelName, material);
 
         public async Task<(bool IsSuccess, string ErrorCode, string ErrorMessage)> AddAsync(Handbag handbag)
         {
             if (string.IsNullOrWhiteSpace(handbag.ModelName) ||
-                !System.Text.RegularExpressions.Regex.IsMatch(handbag.ModelName, @"^([A-Z0-9][a-zA-Z0-9#]*\\s)*([A-Z0-9][a-zA-Z0-9#]*)$"))
+                !System.Text.RegularExpressions.Regex.IsMatch(handbag.ModelName, @"^([A-Z0-9][a-zA-Z0-9#]*\s)*([A-Z0-9][a-zA-Z0-9#]*)$"))
                 return (false, "HB40001", "modelName is required or invalid");
 
             if (handbag.Price <= 0 || handbag.Stock <= 0)
@@ -44,7 +44,7 @@ namespace BLL.Services
                 return (false, "HB40401", "Handbag not found");
 
             if (string.IsNullOrWhiteSpace(handbag.ModelName) ||
-                !System.Text.RegularExpressions.Regex.IsMatch(handbag.ModelName, @"^([A-Z0-9][a-zA-Z0-9#]*\\s)*([A-Z0-9][a-zA-Z0-9#]*)$"))
+                !System.Text.RegularExpressions.Regex.IsMatch(handbag.ModelName, @"^([A-Z0-9][a-zA-Z0-9#]*\s)*([A-Z0-9][a-zA-Z0-9#]*)$"))
                 return (false, "HB40001", "modelName is required or invalid");
 
             if (handbag.Price <= 0 || handbag.Stock <= 0)

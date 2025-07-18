@@ -11,7 +11,7 @@ namespace BLL.Interfaces
     {
         Task<List<Handbag>> GetAllAsync();
         Task<Handbag> GetByIdAsync(int id);
-        Task<List<Handbag>> SearchAsync(string modelName, string material);
+        IQueryable<Handbag> Search(string? modelName, string? material);
         Task<(bool IsSuccess, string ErrorCode, string ErrorMessage)> AddAsync(Handbag handbag);
         Task<(bool IsSuccess, string ErrorCode, string ErrorMessage)> UpdateAsync(Handbag handbag);
         Task<(bool IsSuccess, string ErrorCode, string ErrorMessage)> DeleteAsync(int id);
