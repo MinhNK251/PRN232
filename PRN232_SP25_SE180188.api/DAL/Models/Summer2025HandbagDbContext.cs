@@ -1,6 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Models;
 
@@ -21,9 +22,24 @@ public partial class Summer2025HandbagDbContext : DbContext
 
     public virtual DbSet<SystemAccount> SystemAccounts { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=123456789;database=Summer2025HandbagDB;TrustServerCertificate=True;");
+    //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    //{
+    //    if (!optionsBuilder.IsConfigured)
+    //    {
+    //        optionsBuilder.UseSqlServer(GetConnectionString());
+    //    }
+    //}
+
+    //private string GetConnectionString()
+    //{
+    //    IConfiguration config = new ConfigurationBuilder()
+    //        .SetBasePath(Directory.GetCurrentDirectory())
+    //        .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+    //        .Build();
+
+    //    var connectionString = config.GetConnectionString("DefaultConnectionString");
+    //    return connectionString;
+    //}
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

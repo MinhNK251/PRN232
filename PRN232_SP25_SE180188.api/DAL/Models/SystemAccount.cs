@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models;
 
 public partial class SystemAccount
 {
+    [Key]
     public int AccountId { get; set; }
 
     public string Username { get; set; } = null!;

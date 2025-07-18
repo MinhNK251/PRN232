@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DAL.Models;
 
 public partial class Handbag
 {
+    [Key]
     public int HandbagId { get; set; }
 
     public int? BrandId { get; set; }

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace DAL.Models;
 
 public partial class Brand
 {
+    [Key]
     public int BrandId { get; set; }
 
     public string BrandName { get; set; } = null!;
