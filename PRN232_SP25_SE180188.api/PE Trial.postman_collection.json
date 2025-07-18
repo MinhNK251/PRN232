@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "50d176ba-bcf4-4f1f-a8b8-b9bf21c38542",
+		"name": "PE Trial",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38036907"
+	},
+	"item": [
+		{
+			"name": "Login success",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@handbagasian.org\",\r\n  \"password\": \"@1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7062/api/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Login failed",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"admin@handbagasian.org\",\r\n  \"password\": \"@123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7062/api/auth"
+			},
+			"response": []
+		},
+		{
+			"name": "Get list",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "https://localhost:7062/api/handbags"
+			},
+			"response": []
+		},
+		{
+			"name": "Get by ID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "https://localhost:7062/api/handbags/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"modelName\": \"Elegant 2024\",\r\n  \"material\": \"Leather\",\r\n  \"price\": 250.5,\r\n  \"stock\": 10,\r\n  \"brandId\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7062/api/handbags"
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"modelName\": \"Elegant 2024 Two\",\r\n  \"material\": \"LeatherThree\",\r\n  \"price\": 250.5,\r\n  \"stock\": 10,\r\n  \"brandId\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://localhost:7062/api/handbags/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": "https://localhost:7062/api/handbags/14"
+			},
+			"response": []
+		},
+		{
+			"name": "Search",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBoYW5kYmFnYXNpYW4ub3JnIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiYWRtaW5pc3RyYXRvciIsImV4cCI6MTc1Mjg1NDkyNywiaXNzIjoiSGFuZGJhZ0FQSSIsImF1ZCI6IkhhbmRiYWdBUElVc2VycyJ9.orYlgVvyiaUKdCAVYmgh7dY4Ad-rTmpaF-8sBdSM4fQ"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7062/api/handbags/search?modelName=Classic",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7062",
+					"path": [
+						"api",
+						"handbags",
+						"search"
+					],
+					"query": [
+						{
+							"key": "modelName",
+							"value": "Classic"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
