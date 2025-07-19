@@ -1,0 +1,30 @@
+﻿@page
+@model Client.Pages.Handbag.DetailsModel
+@{
+    ViewData["Title"] = "Handbag Details";
+    String role = HttpContext.Session.GetString("Role");
+    if (role == null)
+    {
+        Response.Redirect("/Login");
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <h3>Model: @Model.Handbag.ModelName</h3>
+    <p><strong>Material:</strong> @Model.Handbag.Material</p>
+    <p><strong>Price:</strong> @Model.Handbag.Price</p>
+    <p><strong>Stock:</strong> @Model.Handbag.Stock</p>
+    <p><strong>Brand:</strong> @Model.Handbag.Brand?.BrandName</p>
+    <p><strong>Release Date:</strong> @Model.Handbag.ReleaseDate</p>
+</div>
+<div>
+    <a asp-page="./Index">Back to List</a>
+    @if (role.Equals("administrator") || role.Equals("moderator"))
+    {
+        <p>
+            <a asp-page="./Edit" asp-route-id="@Model.Handbag.HandbagId">Edit</a>
+        </p>
+    }
+</div>

@@ -1,0 +1,73 @@
+﻿@page
+@model Client.Pages.Handbag.IndexModel
+@{
+    ViewData["Title"] = "Handbags";
+    String role = HttpContext.Session.GetString("Role");
+    if (role == null)
+    {
+        Response.Redirect("/Login");
+    }
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (role.Equals("administrator") || role.Equals("moderator"))
+{
+    <p>
+        <a asp-page="Create" class="btn btn-success">Create New</a>
+    </p>
+}
+
+<p>
+    <a asp-page="/Logout" class="btn btn-danger">Log out</a>
+</p>
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="modelName" placeholder="Search by Model" value="@Model.ModelName" />
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" name="material" placeholder="Search by Material" value="@Model.Material" />
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Model</th>
+            <th>Material</th>
+            <th>Price</th>
+            <th>Stock</th>
+            <th>Brand</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var handbag in Model.Handbags)
+        {
+            <tr>
+                <td>@handbag.ModelName</td>
+                <td>@handbag.Material</td>
+                <td>@handbag.Price</td>
+                <td>@handbag.Stock</td>
+                <td>@handbag.Brand?.BrandName</td>
+                <td>
+                    <a asp-page="./Details" asp-route-id="@handbag.HandbagId" class="btn btn-primary">Details</a>
+                    @if (role.Equals("administrator") || role.Equals("moderator"))
+                    {
+                        <a asp-page="./Edit" asp-route-id="@handbag.HandbagId" class="btn btn-warning">Edit</a>
+
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@handbag.HandbagId" class="d-inline">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,36 @@
+﻿@page
+@model Client.Pages.Handbag.EditModel
+@{
+    ViewData["Title"] = "Edit Handbag";
+}
+<form method="post">
+    <div class="form-group">
+        <label for="modelName">Model Name</label>
+        <input type="text" class="form-control" id="modelName" name="ModelName" value="@Model.Handbag.ModelName" required />
+    </div>
+    <div class="form-group">
+        <label for="material">Material</label>
+        <input type="text" class="form-control" id="material" name="Material" value="@Model.Handbag.Material" />
+    </div>
+    <div class="form-group">
+        <label for="color">Color</label>
+        <input type="text" class="form-control" id="color" name="Color" value="@Model.Handbag.Color" />
+    </div>
+    <div class="form-group">
+        <label for="price">Price</label>
+        <input type="number" class="form-control" id="price" name="Price" value="@Model.Handbag.Price" required />
+    </div>
+    <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" id="stock" name="Stock" value="@Model.Handbag.Stock" />
+    </div>
+    <div class="form-group">
+        <label for="releaseDate">Release Date</label>
+        <input type="date" class="form-control" id="releaseDate" name="ReleaseDate" value="@Model.Handbag.ReleaseDate?.ToString("yyyy-MM-dd")" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Handbag</button>
+</form>
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
