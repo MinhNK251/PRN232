@@ -1,32 +1,60 @@
-﻿1. First, Test Queries
-Get all books:
+﻿# GraphQL API Test Cases
 
-graphql
-query {
+## Base URL
+```
+http://localhost:7097/
+```
+
+## GraphQL Playground (Testing UI)
+```
+http://localhost:7097/ui/altair
+```
+
+---
+
+## 📖 QUERIES
+
+### 1. Get All Books
+**Operation:** Query  
+**Description:** Retrieve all books from the system
+
+```graphql
+query GetAllBooks {
   books {
     title
     author
     publishedYear
   }
 }
-Get a specific book:
+```
 
-graphql
-query {
+### 2. Get Book by Title  
+**Operation:** Query  
+**Description:** Retrieve a specific book by its title
+
+```graphql
+query GetBookByTitle {
   book(title: "1984") {
     title
     author
     publishedYear
   }
 }
-2. Test Mutations
-Add a new book:
+```
 
-graphql
-mutation {
+---
+
+## ✏️ MUTATIONS
+
+### 3. Add New Book
+**Operation:** Mutation  
+**Description:** Add a new book to the system
+
+```graphql
+mutation AddBook {
   addBook(book: {
-    title: "The Hobbit",
-    author: "J.R.R. Tolkien",
+    title: "The Hobbit"
+    author: "J.R.R. Tolkien"
     publishedYear: 1937
   }) {
     title
@@ -34,15 +62,19 @@ mutation {
     publishedYear
   }
 }
-Update a book:
+```
 
-graphql
-mutation {
+### 4. Update Existing Book
+**Operation:** Mutation  
+**Description:** Update an existing book's information
+
+```graphql
+mutation UpdateBook {
   updateBook(
-    oldTitle: "The Hobbit",
+    oldTitle: "The Hobbit"
     updatedBook: {
-      title: "The Hobbit: There and Back Again",
-      author: "J.R.R. Tolkien",
+      title: "The Hobbit: There and Back Again"
+      author: "J.R.R. Tolkien"
       publishedYear: 1937
     }
   ) {
@@ -51,105 +83,182 @@ mutation {
     publishedYear
   }
 }
-Delete a book:
+```
 
-graphql
-mutation {
+### 5. Delete Book
+**Operation:** Mutation  
+**Description:** Delete a book by title
+
+```graphql
+mutation DeleteBook {
   deleteBook(title: "1984")
 }
-3. Test Subscriptions (Real-time)
-Subscriptions require two steps:
+```
 
-Step 1: Open a subscription in one tab/window:
+---
 
-graphql
-subscription {
+## 🔔 SUBSCRIPTIONS (Real-time)
+
+### 6. Subscribe to New Books
+**Operation:** Subscription  
+**Description:** Real-time notifications when new books are added  
+**Note:** Requires WebSocket connection
+
+```graphql
+subscription OnBookAdded {
   bookAdded {
     title
     author
     publishedYear
   }
 }
-Step 2: In another tab/window, trigger the event with a mutation:
+```
 
-graphql
-mutation {
-  addBook(book: {
-    title: "New Book from Subscription",
-    author: "Test Author", 
-    publishedYear: 2024
-  }) {
-    title
-  }
-}
-Test all subscription types:
+### 7. Subscribe to Book Updates
+**Operation:** Subscription  
+**Description:** Real-time notifications when books are updated
 
-graphql
-# Subscription 1: New books
-subscription {
-  bookAdded {
-    title
-    author
-  }
-}
-
-# Subscription 2: Updated books  
-subscription {
+```graphql
+subscription OnBookUpdated {
   bookUpdated {
     title
     author
+    publishedYear
   }
 }
+```
 
-# Subscription 3: Deleted books
-subscription {
+### 8. Subscribe to Book Deletions
+**Operation:** Subscription  
+**Description:** Real-time notifications when books are deleted
+
+```graphql
+subscription OnBookDeleted {
   bookDeleted
 }
-4. Complete Test Scenario
-1. First, get all books to see initial state:
+```
 
-graphql
-query { books { title author publishedYear } }
-2. Add a new book:
+---
 
-graphql
-mutation {
-  addBook(book: {
-    title: "Dune",
-    author: "Frank Herbert",
-    publishedYear: 1965
-  }) {
-    title
-    author
-  }
-}
-3. Verify the book was added:
+## 🧪 TEST SCENARIOS
 
-graphql
-query { books { title author } }
-4. Update the book:
+### Complete CRUD Flow Test
+1. **Get initial books:** Run `GetAllBooks`
+2. **Add new book:** Run `AddBook` with test data
+3. **Verify addition:** Run `GetAllBooks` again
+4. **Update book:** Run `UpdateBook` 
+5. **Verify update:** Run `GetBookByTitle` with new title
+6. **Delete book:** Run `DeleteBook`
+7. **Verify deletion:** Run `GetAllBooks`
 
-graphql
-mutation {
-  updateBook(
-    oldTitle: "Dune",
-    updatedBook: {
-      title: "Dune: Special Edition",
-      author: "Frank Herbert",
-      publishedYear: 1965
+### Real-time Flow Test
+1. **Open subscription:** Run `OnBookAdded` in Tab 1
+2. **Trigger event:** Run `AddBook` in Tab 2
+3. **Observe real-time update** in Tab 1
+
+---
+
+## 🛠 FRONTEND USAGE EXAMPLES
+
+### JavaScript/TypeScript (Apollo Client)
+```javascript
+import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
+
+const client = new ApolloClient({
+  uri: 'http://localhost:5000/graphql',
+  cache: new InMemoryCache()
+});
+
+// Query example
+const GET_BOOKS = gql`
+  query {
+    books {
+      title
+      author
     }
-  ) {
-    title
-    author
+  }
+`;
+
+// Mutation example  
+const ADD_BOOK = gql`
+  mutation AddBook($book: BookInput!) {
+    addBook(book: $book) {
+      title
+      author
+    }
+  }
+`;
+```
+
+### React Hook Example
+```javascript
+import { useQuery, useMutation } from '@apollo/client';
+
+function BooksComponent() {
+  const { data, loading } = useQuery(GET_BOOKS);
+  const [addBook] = useMutation(ADD_BOOK);
+  
+  if (loading) return <p>Loading...</p>;
+  
+  return (
+    <div>
+      {data.books.map(book => (
+        <div key={book.title}>{book.title} by {book.author}</div>
+      ))}
+    </div>
+  );
+}
+```
+
+---
+
+## ⚠️ NOTES
+
+- **Subscriptions require WebSocket support** - ensure `app.UseWebSockets()` is configured
+- **All mutations return the affected book** (except delete which returns boolean)
+- **Error handling** is built into GraphQL responses
+- **Use Altair UI** for easy testing: http://localhost:7097/ui/altair
+
+---
+
+## 📋 SAMPLE RESPONSES
+
+### Successful Query Response
+```json
+{
+  "data": {
+    "books": [
+      {
+        "title": "1984",
+        "author": "George Orwell",
+        "publishedYear": 1949
+      }
+    ]
   }
 }
-5. Delete a book:
+```
 
-graphql
-mutation {
-  deleteBook(title: "To Kill a Mockingbird")
+### Successful Mutation Response  
+```json
+{
+  "data": {
+    "addBook": {
+      "title": "The Hobbit",
+      "author": "J.R.R. Tolkien"
+    }
+  }
 }
-6. Final verification:
+```
 
-graphql
-query { books { title author publishedYear } }
+### Subscription Response (Real-time)
+```json
+{
+  "data": {
+    "bookAdded": {
+      "title": "New Book",
+      "author": "New Author",
+      "publishedYear": 2024
+    }
+  }
+}
+```
