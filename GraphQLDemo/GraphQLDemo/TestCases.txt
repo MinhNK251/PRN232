@@ -1,0 +1,155 @@
+﻿1. First, Test Queries
+Get all books:
+
+graphql
+query {
+  books {
+    title
+    author
+    publishedYear
+  }
+}
+Get a specific book:
+
+graphql
+query {
+  book(title: "1984") {
+    title
+    author
+    publishedYear
+  }
+}
+2. Test Mutations
+Add a new book:
+
+graphql
+mutation {
+  addBook(book: {
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    publishedYear: 1937
+  }) {
+    title
+    author
+    publishedYear
+  }
+}
+Update a book:
+
+graphql
+mutation {
+  updateBook(
+    oldTitle: "The Hobbit",
+    updatedBook: {
+      title: "The Hobbit: There and Back Again",
+      author: "J.R.R. Tolkien",
+      publishedYear: 1937
+    }
+  ) {
+    title
+    author
+    publishedYear
+  }
+}
+Delete a book:
+
+graphql
+mutation {
+  deleteBook(title: "1984")
+}
+3. Test Subscriptions (Real-time)
+Subscriptions require two steps:
+
+Step 1: Open a subscription in one tab/window:
+
+graphql
+subscription {
+  bookAdded {
+    title
+    author
+    publishedYear
+  }
+}
+Step 2: In another tab/window, trigger the event with a mutation:
+
+graphql
+mutation {
+  addBook(book: {
+    title: "New Book from Subscription",
+    author: "Test Author", 
+    publishedYear: 2024
+  }) {
+    title
+  }
+}
+Test all subscription types:
+
+graphql
+# Subscription 1: New books
+subscription {
+  bookAdded {
+    title
+    author
+  }
+}
+
+# Subscription 2: Updated books  
+subscription {
+  bookUpdated {
+    title
+    author
+  }
+}
+
+# Subscription 3: Deleted books
+subscription {
+  bookDeleted
+}
+4. Complete Test Scenario
+1. First, get all books to see initial state:
+
+graphql
+query { books { title author publishedYear } }
+2. Add a new book:
+
+graphql
+mutation {
+  addBook(book: {
+    title: "Dune",
+    author: "Frank Herbert",
+    publishedYear: 1965
+  }) {
+    title
+    author
+  }
+}
+3. Verify the book was added:
+
+graphql
+query { books { title author } }
+4. Update the book:
+
+graphql
+mutation {
+  updateBook(
+    oldTitle: "Dune",
+    updatedBook: {
+      title: "Dune: Special Edition",
+      author: "Frank Herbert",
+      publishedYear: 1965
+    }
+  ) {
+    title
+    author
+  }
+}
+5. Delete a book:
+
+graphql
+mutation {
+  deleteBook(title: "To Kill a Mockingbird")
+}
+6. Final verification:
+
+graphql
+query { books { title author publishedYear } }
